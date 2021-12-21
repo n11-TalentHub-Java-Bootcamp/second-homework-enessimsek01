@@ -1,69 +1,45 @@
 package entity;
 
-
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "PRODUCT_REVIEW")
 public class ProductReview {
+    @SequenceGenerator(name = "product_review_generator", sequenceName = "PRODUCT_REVIEW_ID_SEQ", allocationSize = 1)
     @Id
+    @GeneratedValue(generator = "product_review_generator")
     @Column(name = "ID", nullable = false)
     private Long id;
-    @Column(name="YORUM",nullable = false,length = 500)
-    private String yorum;
 
-    @Column(name="YORUM_TARIHI")
+    @Column(name = "REVIEW", length = 500)
+    private String review;
+
+    @Column(name = "REVIEW_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date yorumTarihi;
+    private Date reviewDate;
 
-    @Override
-    public String toString() {
-        return "ProductReview{" +
-                "id=" + id +
-                ", yorum='" + yorum + '\'' +
-                ", yorumTarihi=" + yorumTarihi +
-                ", urunId=" + urunId +
-                ", kullaniciAdi=" + kullaniciAdi +
-                '}';
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PRODUCT_ID",foreignKey = @ForeignKey(name = "FK_PRODUCT_REVIEW_PRODUCT_ID"))
+    private Urun urun;
+
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="USER_ID",foreignKey = @ForeignKey(name="FK_PRODUCT_REVIEW_USER_ID"))
+    private User user;
+
+    // Constructors
+    public ProductReview() {
     }
 
-    @Column(name="URUN_ID")
-    private Long urunId;
-
-    public String getYorum() {
-        return yorum;
+    public ProductReview(Long id, String review, Date reviewDate, Urun urun, User user) {
+        this.id = id;
+        this.review = review;
+        this.reviewDate = reviewDate;
+        this.urun = urun;
+        this.user = user;
     }
-
-    public void setYorum(String yorum) {
-        this.yorum = yorum;
-    }
-
-    public Date getYorumTarihi() {
-        return yorumTarihi;
-    }
-
-    public void setYorumTarihi(Date yorumTarihi) {
-        this.yorumTarihi = yorumTarihi;
-    }
-
-    public Long getUrunId() {
-        return urunId;
-    }
-
-    public void setUrunId(Long urunId) {
-        this.urunId = urunId;
-    }
-
-    public Long getKullaniciAdi() {
-        return kullaniciAdi;
-    }
-
-    public void setKullaniciAdi(Long kullaniciAdi) {
-        this.kullaniciAdi = kullaniciAdi;
-    }
-
-    @Column(name="KULLANICI_ADI")
-    private Long kullaniciAdi;
 
     public Long getId() {
         return id;
@@ -71,5 +47,42 @@ public class ProductReview {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public Date getReviewDate() {
+        return reviewDate;
+    }
+
+    public void setReviewDate(Date reviewDate) {
+        this.reviewDate = reviewDate;
+    }
+
+    public Urun getUrun() {
+        return urun;
+    }
+
+    public void setUrun(Urun urun) {
+        this.urun = urun;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return id == null ? "" : id.toString();
     }
 }

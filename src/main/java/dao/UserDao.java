@@ -1,16 +1,17 @@
 package dao;
 
-import base.BaseDao;
-import entity.Users;
-import org.hibernate.query.Query;
+import entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public class UserDao extends BaseDao {
+public interface UserDao extends JpaRepository<User, Long> {
 
-    public List<Users> findAll(){
+    public List<User> findAll();
 
-        Query query=getCurrentSession().createQuery("select users from Users users");
-        return query.list();
-    }
+    User findUserByUsername(String username);
+
+    User findUserByCellPhone(String phone);
+
+    User findUserById(Long id);
 }

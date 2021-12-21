@@ -1,16 +1,12 @@
 package dao;
 
-import base.BaseDao;
 import entity.Kategori;
-import org.hibernate.query.Query;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public class KategoriDao extends BaseDao {
+public interface KategoriDao extends JpaRepository<Kategori,Long> {
 
-    public List<Kategori> findAll(){
-
-        Query query=getCurrentSession().createQuery("select kategori from Kategori kategori");
-        return query.list();
-    }
+    List<Kategori> findAll();
+    Kategori findKategoriById(Long kategoriId);
 }

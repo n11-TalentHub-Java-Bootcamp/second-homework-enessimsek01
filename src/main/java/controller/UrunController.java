@@ -1,0 +1,24 @@
+package controller;
+
+import dto.ProductWithReviewDto;
+import entityService.UrunEntityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/urun")
+public class UrunController {
+
+    @Autowired
+    private UrunEntityService urunEntityService;
+
+    @GetMapping("/{urunId}/comment")
+    public List<ProductWithReviewDto> findCommentListByUrunId(@PathVariable Long urunId){
+        return urunEntityService.findReviewListByProductId(urunId);
+    }
+}

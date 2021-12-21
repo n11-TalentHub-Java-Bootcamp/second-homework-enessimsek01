@@ -1,40 +1,31 @@
 package entityService;
 
 import dao.UrunDao;
-import dto.UrunDetayDto;
+import dto.ProductWithReviewDto;
 import entity.Urun;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
+@Service
 public class UrunEntityService {
 
+    @Autowired
     private UrunDao urunDao;
 
-    public UrunEntityService() {
-        urunDao = new UrunDao();
-    }
+    @Autowired
+    private ProductReviewEntityService productReviewEntityService;
 
     public List<Urun> findAll() {
         return urunDao.findAll();
     }
 
-    public Urun findById(Long id){
-        return urunDao.findById(id);
-    }
+    public List<ProductWithReviewDto> findReviewListByProductId(Long productId) {
+        return productReviewEntityService.findReviewListByProductId(productId);
 
-    public List<Urun> findAllUrunListByFiyatGeAndFiyatLe(BigDecimal fiyatGe, BigDecimal fiyatLe){
-        return urunDao.findAllUrunListByFiyatGeAndFiyatLe(fiyatGe, fiyatLe);
     }
-
-    public List<Urun> findAllUrunListByFiyatBetween(BigDecimal fiyatGe, BigDecimal fiyatLe){
-        return urunDao.findAllUrunListByFiyatBetween(fiyatGe,fiyatLe);
+    public Urun findProductById(Long id){
+        return urunDao.findProductById(id);
     }
-    public List<Urun> findAllUrunByKategoriKirilim(Long kirilim){
-        return urunDao.findAllUrunByKategoriKirilim(kirilim);
-    }
-    public List<UrunDetayDto> findAllUrunDetayDtoByKategoriKirilim(Long kirilim) {
-        return urunDao.findAllUrunDetayDtoByKategoriKirilim(kirilim);
-    }
-
 }

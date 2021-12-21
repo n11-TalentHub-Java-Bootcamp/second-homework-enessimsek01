@@ -24,7 +24,5 @@
         <!-- Annotated com.bahadirmemis.entity classes -->
         <mapping class="entity.Kategori"/>
         <mapping class="entity.Urun"/>
-        <mapping class="entity.Users"/>
-        <mapping class="entity.ProductReview"/>
     </session-factory>
 </hibernate-configuration>
